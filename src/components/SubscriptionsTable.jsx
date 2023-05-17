@@ -36,7 +36,7 @@ const SubscriptionsTable = ({ data }) => {
                 <td className="px-4 py-2">{user.name}</td>
                 <td className="px-4 py-2">{user.desc}</td>
                 <td className="px-4 py-2">{user.price}</td>
-                <td className="  gap-2 flex flex-col px-4 py-2  md:flex justify-center md:gap-3">
+                <td className="  gap-2 flex flex-col px-4 py-2  md:flex justify-center md:gap-3 md:flex-row">
                   <button
                     onClick={() => handleRemoveUser(user.id)}
                     className="px-4 py-2 text-white bg-red-300 rounded hover:bg-red-600"
