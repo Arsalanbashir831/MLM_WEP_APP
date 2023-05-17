@@ -3,13 +3,13 @@ import Box from '../widgets/Box';
 import mostSoldProducts from '../data/ProductsData';
 
 
-const Home = () => {
+const UserHome = () => {
   return (
     <div className="col-span-4">
       <div className="flex flex-col md:flex-row text-center gap-11 mx-auto">
-        <Box  title="Team" number={10} />
+        <Box  title="Down Members" number={10} />
         <Box title="Sales($)" number={100+"$"} />
-        <Box title="Products" number={9} />
+        <Box title="Account Balance" number={9000 +"$"} />
       </div>
 
       <div className="my-6 font-extrabold">
@@ -40,4 +40,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default UserHome;
