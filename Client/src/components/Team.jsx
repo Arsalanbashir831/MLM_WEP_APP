@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 
 const Team = () => {
     const [teamMembers, setTeamMembers] = useState([
-        { id: 1, name: 'John Doe', address: '123 Main St', sales: 100 },
-        { id: 2, name: 'Jane Smith', address: '456 Elm St', sales: 200 },
+        { id: 1, name: 'John Doe', address: '123 Main St', level: 'PC' },
+        { id: 2, name: 'Jane Smith', address: '456 Elm St', level: 'AS' },
     ]);
 
     const [newMember, setNewMember] = useState({ id: '' });
@@ -51,7 +51,7 @@ const Team = () => {
                         <th className="px-4 py-2">ID</th>
                         <th className="px-4 py-2">Name</th>
                         <th className="px-4 py-2">Address</th>
-                        <th className="px-4 py-2">Sales</th>
+                        <th className="px-4 py-2">Levels</th>
                         <th className="px-4 py-2">Actions</th>
                     </tr>
                 </thead>
@@ -61,7 +61,7 @@ const Team = () => {
                             <td className="border px-4 py-2">{member.id}</td>
                             <td className="border px-4 py-2">{member.name}</td>
                             <td className="border px-4 py-2">{member.address}</td>
-                            <td className="border px-4 py-2">{member.sales}</td>
+                            <td className="border px-4 py-2">{member.level}</td>
                             <td className="border px-4 py-2">
                                 <button
                                     className="bg-yellow-300 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded mr-2"
