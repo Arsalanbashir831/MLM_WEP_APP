@@ -4,9 +4,7 @@ const userSchema = new mongoose.Schema({
     email: String,
     password: String,
     team: Number,
-    
     rank : String,
-
     personal_cc: {
         type: Number,
         default: 0
