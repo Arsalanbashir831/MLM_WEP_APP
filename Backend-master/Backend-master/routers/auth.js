@@ -4,7 +4,7 @@ const router = express.Router()
 
 router.post('/teamAuth',async(req,res)=>{
     console.log(req.body)
-    res.status(200)
+    res.send("Successful")
 })
 
 router.post('/companyAuth',async(req,res)=>{
