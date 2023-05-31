@@ -22,6 +22,8 @@ const UserDetailForm = () => {
   };
 
   return (
+    <>
+    <form action="" method='get'>
     <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-md mx-auto my-2">
       <h2 className="text-center text-2xl font-bold mb-6">User Details</h2>
       <form onSubmit={handleSubmit}>
@@ -77,6 +79,8 @@ const UserDetailForm = () => {
         </div>
       </form>
     </div>
+    </form>
+    </>
   );
 };
 
