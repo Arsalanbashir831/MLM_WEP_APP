@@ -33,7 +33,6 @@ router.get('/companies/:companyId/products', async (req, res) => {
     if (!company) {
       return res.status(404).json({ error: 'Company not found' });
     }
-
     const products = company.products;
     res.json(products);
   } catch (error) {

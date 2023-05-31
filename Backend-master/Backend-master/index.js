@@ -1,16 +1,14 @@
 const dbConn  = require('./config/dbConn');
 const mongoose = require('mongoose')
-
+const auth = require('./routers/auth')
+const cors = require('cors')
 dbConn();
 
 
 const express = require('express')
-
 const app = express()
-
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
+app.use(express.urlencoded({ extended: true }));
 app.set("view engine",'ejs')
 
 
@@ -24,6 +22,11 @@ app.get("/",(req,res)=>{
 
 const teamRouter = require('./routers/team')
 app.use("/team",teamRouter)
+
+
+app.use('/auth',auth)
+
+app.use(cors({origin: 'http://127.0.0.1:5173'}))
 
 
 mongoose.connection.once('open', ()=>{
