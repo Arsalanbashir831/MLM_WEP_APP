@@ -6,6 +6,7 @@ const Tutorial = require('./Tutorial');
 
 const companySchema = new mongoose.Schema({
     CompName: String,
+    CompPass: String,
     products: [Product],
     tutorial: [Tutorial],
     team : [Number]

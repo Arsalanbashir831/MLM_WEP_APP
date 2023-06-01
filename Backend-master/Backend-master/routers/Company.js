@@ -1,15 +1,17 @@
 const express = require("express")
 const mongoose = require("mongoose")
-const companySchema = require('../model/Company')
+const companyModel = require('../model/Company')
 const router = express.Router()
 
 router.post('/addCompany',async(req,res)=>{
-    const {companyName,username,password} = req.body
-    const result = new companySchema({
-        companyName , username , password 
+    const {CompName,CompPass} = req.body
+    const result = new companyModel({
+        CompName,CompPass
     })
+
     const saved = await result.save();
-    console.log(result)
+    console.log(saved)
     res.status(200).json(result)
 })
 
+module.exports = router

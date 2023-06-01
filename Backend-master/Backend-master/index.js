@@ -25,6 +25,9 @@ const teamRouter = require('./routers/team')
 app.use("/team",teamRouter)
 
 
+const companyRouter = require('./routers/company')
+app.use('/company',companyRouter)
+
 app.use('/auth',auth)
 
 
