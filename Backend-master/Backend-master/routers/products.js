@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Company = require('../model/Company');
+
 // Create a product for a company
 router.post('/companies/:companyId/products', async (req, res) => {
   try {
@@ -16,6 +17,8 @@ router.post('/companies/:companyId/products', async (req, res) => {
       p_img,
       category
     };
+
+    companyRouter
     company.products.push(newProduct);
     const savedCompany = await company.save();
     res.json(savedCompany);
@@ -88,4 +91,10 @@ router.delete('/companies/:companyId/products/:productId', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
+
+const addProduct = (companyName, product)=>{
+  Company.findOneAndUpdate({CompName: companyName},{$addToSet:{products: product}})
+}
+
+
 module.exports = router;
