@@ -45,12 +45,12 @@ const Login = () => {
                   Login
                 </Button> */}
               <div className='text-center'>
-                <Button onClick={fetchData}  style={{ width: "80%", margin: "10px 0px", background: "white", color: "black" }} variant="contained" color="primary">
-                  <IconButton>
+                {/* <Button onClick={fetchData}  style={{ width: "80%", margin: "10px 0px", background: "white", color: "black" }} variant="contained" color="primary"> */}
+                  {/* <IconButton>
                     <img src={googleIcon} alt="Google Icon" width={30} height={20} />
                   </IconButton>
                   Google Sign In
-                </Button>
+                </Button> */}
               </div>
             </div>
           </div>
