@@ -8,7 +8,7 @@ const companySchema = new mongoose.Schema({
     CompName: String,
     products: [Product],
     tutorial: [Tutorial],
-    team : [Team]
+    team : [Number]
 });
 
 module.exports = mongoose.model("company", companySchema);

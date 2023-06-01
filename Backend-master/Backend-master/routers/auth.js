@@ -12,12 +12,12 @@ router.post('/teamAuth',async(req,res)=>{
     }
 })
 
-router.post('/companyAuth',async(req,res)=>{
-    const {CompName} = req.body;
-    const result = await companyRouter.find({CompName: CompName})
-    if (result != null || result != {}){
-        return res.status(200).json({url : "/company/"+ username})
-    }
-})
+// router.post('/companyAuth',async(req,res)=>{
+//     const {CompName} = req.body;
+//     const result = await companyRouter.find({CompName: CompName})
+//     if (result != null || result != {}){
+//         return res.status(200).json({url : "/company/"+ username})
+//     }
+// })
 
 module.exports = router

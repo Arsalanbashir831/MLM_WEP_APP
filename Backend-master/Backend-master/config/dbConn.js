@@ -6,7 +6,7 @@ const dbConn = async () =>{
             useUnifiedTopology: true,
             useNewUrlParser: true
         });
-
+        mongoose.set('debug',true)
     } catch(err){
         console.error(err);
     }

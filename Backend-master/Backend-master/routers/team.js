@@ -1,17 +1,34 @@
 const express = require("express")
 const mongoose = require("mongoose")
-const teamSchema = require('../model/Team')
+const teamModel = require('../model/Team')
+const teamSchema = teamModel.schema
 const router = express.Router()
 let id = 1
-router.post("/newTeam",async(req,res)=>{
-    const {team} = req.body 
-    const result = new teamSchema({
-        id,team
+
+let conn = mongoose.connection;
+
+router.post("/newTeam", async (req, res) => {
+    const { username, password } = req.body
+
+    id = id + 1;
+    // Find the last added record
+    
+    const lastAddedTeam = await teamModel.findOne().sort({ _id: -1 });
+    if (lastAddedTeam == null || lastAddedTeam == {}) {
+        id = 0
+    }
+    else {
+        id = lastAddedTeam.id + 1;
+    }
+
+    const newTeam = new teamModel({
+        id : id,
+        username: username,
+        password : password
     })
-    id =  id+1;
-     // Find the last added record
-  const lastAddedTeam = await teamSchema.findOne().sort({ _id: -1 });
-  res.status(200).json(lastAddedTeam+1);
+
+    newTeam.save()
+    res.status(200).json({username :newTeam._id});
     // res.status(200).json(result);
 })
 
