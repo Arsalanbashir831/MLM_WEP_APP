@@ -24,6 +24,7 @@ router.post('/companies/:companyId/products', async (req, res) => {
     res.json(savedCompany);
   } catch (error) {
     res.status(500).json({ error: 'Server error' });
+    
   }
 });
 
