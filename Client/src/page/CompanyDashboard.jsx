@@ -3,11 +3,15 @@ import AdminNav from '../components/AdminNav';
 import Home from '../components/Home';
 import Products from '../components/Products';
 import Team from '../components/Team';
+import Training from "../components/Training"
+import { Button } from '@mui/material';
+import { Add, Delete, Edit } from '@mui/icons-material';
 
 const navigation = [
   { id: '1', name: 'Home' },
   { id: '2', name: 'Product' },
   { id: '3', name: 'Team' },
+  { id: '4', name: 'Training' },
 ];
 
 const CompanyDashboard = () => {
@@ -28,9 +32,8 @@ const CompanyDashboard = () => {
                 <div
                   key={nav.id}
                   id={nav.id}
-                  className={`cursor-pointer ${
-                    navigate === nav.id ? 'text-orange-500 font-bold' : 'text-black'
-                  }`}
+                  className={`cursor-pointer ${navigate === nav.id ? 'text-orange-500 font-bold' : 'text-black'
+                    }`}
                   onClick={() => navigationHandler(nav.id)}
                 >
                   <h2>{nav.name}</h2>
@@ -42,6 +45,19 @@ const CompanyDashboard = () => {
             {navigate === '1' && <Home />}
             {navigate === '2' && <Products />}
             {navigate === '3' && <Team />}
+            {navigate === '4' && (
+              <>
+              <div className='text-right'>
+               
+                <button
+                  className="bg-blue-300 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2" 
+                >
+                  <Add></Add>
+                </button>
+                </div>
+                <Training />
+              </>
+            )}
           </div>
         </div>
       </div>
