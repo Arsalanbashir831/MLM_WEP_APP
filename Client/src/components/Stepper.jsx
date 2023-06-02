@@ -15,6 +15,7 @@ const steps = ['Get Started', 'Joining', 'Select Plan'];
 export default function Steppers() {
   const [activeStep, setActiveStep] = React.useState(0);    
   const [completed, setCompleted] = React.useState({});
+  
 
  const totalSteps = () => {
     return steps.length;
@@ -61,6 +62,12 @@ export default function Steppers() {
     setActiveStep(0);
     setCompleted({});
   };
+  const handleFormSubmit = (stepFormData) => {
+    const newFormData = { ...completed };
+    newFormData[activeStep] = stepFormData;
+    setCompleted(newFormData);
+    handleNext();
+  };
 
 
   return (
@@ -89,9 +96,9 @@ export default function Steppers() {
         ) : (
           <React.Fragment>
             <Typography sx={{ mt: 2, mb: 1, py: 1 }}>
-                {activeStep===0?<UserDetailForm></UserDetailForm>:""}
-                {activeStep===1?<PlanForm></PlanForm>:""}
-               {activeStep===2? <SelectPlan ></SelectPlan>:""}
+                {activeStep===0?<UserDetailForm onSubmit={handleFormSubmit}></UserDetailForm>:""}
+                {activeStep===1?<PlanForm onSubmit={handleFormSubmit}></PlanForm>:""}
+               {activeStep===2? <SelectPlan onSubmit={handleFormSubmit} ></SelectPlan>:""}
               
                 
             </Typography>

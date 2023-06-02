@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { setJoin } from '../global';
 
-const PlanForm = () => {
+const PlanForm = (  ) => {
     const [formData, setFormData] = useState({
         joinAs: '',
         teamName: '',

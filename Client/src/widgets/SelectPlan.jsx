@@ -35,7 +35,7 @@ function getStyles(name, companyName, theme) {
   };
 }
 
-const SelectPlan = () => {
+const SelectPlan = ({ onSubmit }) => {
   const theme = useTheme();
 
   const [companyDetails, setCompanyDetails] = useState({
@@ -71,6 +71,12 @@ const SelectPlan = () => {
     }));
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    onSubmit(companyDetails);
+    console.log(companyDetails); // Replace with your logic
+  };
+
   return (
     <div className="bg-white shadow-md rounded px-8 py-6 max-w-md mx-auto">
       {getJoin() === 'company' && (
@@ -79,7 +85,7 @@ const SelectPlan = () => {
         </>
       )}
       {getJoin() === 'team' && (
-        <>
+        <form onSubmit={handleSubmit}>
           {/* Render the input fields and calendar for team */}
           <FormControl sx={{ m: 1, width: 300, mt: 3 }}>
             <Select
@@ -173,9 +179,16 @@ const SelectPlan = () => {
                 }
                 onChange={handleCalendarChange}
               />
+
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit"
+              >
+                Submit
+              </button>
             </>
           )}
-        </>
+        </form>
       )}
     </div>
   );
