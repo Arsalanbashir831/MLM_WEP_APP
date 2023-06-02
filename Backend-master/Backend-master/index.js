@@ -31,6 +31,8 @@ app.use('/company',companyRouter)
 app.use('/auth',auth)
 
 
+const productRouter = require('./routers/products')
+app.use("/product",productRouter)
 
 
 mongoose.connection.once('open', ()=>{

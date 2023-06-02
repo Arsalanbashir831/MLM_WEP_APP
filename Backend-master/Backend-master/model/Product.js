@@ -5,4 +5,4 @@ const productSchema = new mongoose.Schema({
     p_img: String,
     category: String,
 });
-module.exports =  productSchema;
+module.exports =  mongoose.model("product",productSchema) ;

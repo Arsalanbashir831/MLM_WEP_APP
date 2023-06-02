@@ -1,26 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const Company = require('../model/Company');
+const product = require('../model/Product')
 // Create a product for a company
-router.post('/companies/:companyId/products', async (req, res) => {
+router.post('/addProduct', async (req, res) => {
   try {
-    const { companyId } = req.params;
-    const company = await Company.findById(companyId);
-    if (!company) {
-      return res.status(404).json({ error: 'Company not found' });
-    }
-    const { prodName, cc, p_img, category } = req.body;
-    const newProduct = {
-      prodName,
-      cc,
-      p_img,
-      category
-    };
-    company.products.push(newProduct);
-    const savedCompany = await company.save();
-    res.json(savedCompany);
+    const { prodName, cc, p_img, category, CompName } = req.body;
+    const newProduct = new product({
+      prodName: prodName,
+      cc : cc,
+      p_img : p_img,
+      category : category
+    });
+    newProduct.save()
+    addProduct(CompName, newProduct)
+    res.json(newProduct)
   } catch (error) {
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: error });
+     
   }
 });
 
@@ -88,4 +85,17 @@ router.delete('/companies/:companyId/products/:productId', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
+
+const addProduct = async(companyName, product)=>{
+  const data = await Company.findOne({CompName: companyName}).exec()
+  console.log(data)
+  data.products.push(product)
+
+  // await Company.deleteOne({CompName: companyName})
+  const newData = new Company(data)
+  newData.save()
+  console.log(newData)
+}
+
+
 module.exports = router;
