@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getJoin } from '../global';
 import { useTheme } from '@mui/material/styles';
 import Calendar from 'react-calendar';
@@ -7,6 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import 'react-calendar/dist/Calendar.css';
+import axios from 'axios';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -18,22 +19,6 @@ const MenuProps = {
     },
   },
 };
-const names = [
-  'Company 1',
-  'Company 2',
-  'Company 3',
-  'Company 4',
-  'Not Mention',
-];
-
-function getStyles(name, companyName, theme) {
-  return {
-    fontWeight:
-      companyName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
 
 const SelectPlan = ({ onSubmit }) => {
   const theme = useTheme();
@@ -46,8 +31,26 @@ const SelectPlan = ({ onSubmit }) => {
     meetingDate: '',
   });
   const [availableDates, setAvailableDates] = useState([]);
-  const [companyName, setCompanyName] = useState('');
+  const [companyName, setCompanyName] = useState([]);
 
+  useEffect(() => {
+    const fetchCompanyNames = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/company/getAllCompany');
+        const companyNames = response.data.map((name) => name.CompName);
+  
+        // Add static company name to the array
+        const staticCompanyName = 'Not Mention';
+        const modifiedCompanyNames = [staticCompanyName, ...companyNames];
+  
+        setCompanyName(modifiedCompanyNames);
+      } catch (error) {
+        console.error('Error fetching company names:', error);
+      }
+    };
+  
+    fetchCompanyNames();
+  }, []);
   const handleInputChange = (event) => {
     const { id, value } = event.target;
     setCompanyDetails((prevDetails) => ({
@@ -70,13 +73,14 @@ const SelectPlan = ({ onSubmit }) => {
       meetingDate: date,
     }));
   };
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit(companyDetails);
+    onSubmit(()=>{
+        axios.post("http://localhost:3000/team/newTeam",{data:companyDetails})
+    });
+    
     console.log(companyDetails); // Replace with your logic
   };
-
   return (
     <div className="bg-white shadow-md rounded px-8 py-6 max-w-md mx-auto">
       {getJoin() === 'company' && (
@@ -90,8 +94,8 @@ const SelectPlan = ({ onSubmit }) => {
           <FormControl sx={{ m: 1, width: 300, mt: 3 }}>
             <Select
               displayEmpty
-              value={companyName}
-              onChange={(event) => setCompanyName(event.target.value)}
+              value={companyDetails.name}
+              onChange={(event) => handleInputChange(event)}
               input={<OutlinedInput />}
               renderValue={(selected) => {
                 if (!selected) {
@@ -105,19 +109,18 @@ const SelectPlan = ({ onSubmit }) => {
               <MenuItem disabled value="">
                 <em>Select Company</em>
               </MenuItem>
-              {names.map((name) => (
+              {companyName.map((name) => (
                 <MenuItem
                   key={name}
                   value={name}
-                  style={getStyles(name, companyName, theme)}
                 >
                   {name}
+                  
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
-
-          {companyName === 'Not Mention' && (
+          {companyDetails.name === 'Not Mention' && (
             <>
               <label className="block text-gray-700 font-bold mb-2 my-2" htmlFor="companyName">
                 Company Name
@@ -130,7 +133,6 @@ const SelectPlan = ({ onSubmit }) => {
                 onChange={handleInputChange}
                 placeholder="Enter company Name"
               />
-
               <label className="block text-gray-700 font-bold mb-2 my-2" htmlFor="companyUrl">
                 Company URL
               </label>
@@ -180,14 +182,13 @@ const SelectPlan = ({ onSubmit }) => {
                 onChange={handleCalendarChange}
               />
             </>
-            
           )}
           <button
-                className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit"
-              >
-                Done
-              </button>
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >
+            Done
+          </button>
         </form>
       )}
     </div>

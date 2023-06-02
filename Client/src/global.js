@@ -7,13 +7,7 @@ function setJoin(joiner){
 function getJoin(){
     return join
 }
-let userDetailForm;
-function setUserData(formData){
-    userDetailForm = formData
-}
-function getUserData(){
-    return userDetailForm
-}
-export {setJoin,getJoin,setUserData,getUserData}
+
+export {setJoin,getJoin}
 
 

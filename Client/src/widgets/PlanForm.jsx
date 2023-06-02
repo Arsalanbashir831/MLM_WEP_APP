@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { setJoin,getUserData } from '../global';
+import {setJoin} from '../global';
 import axios from 'axios'
 const PlanForm = ({ onSubmit }  ) => {
     const [formData, setFormData] = useState({
@@ -11,34 +11,31 @@ const PlanForm = ({ onSubmit }  ) => {
         companyURL: '',
         companyDescription: '',
         companyAddress:''
-    });
-
+});
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setFormData((prevFormData) => ({
             ...prevFormData,
             [name]: value,
         }));
+        console.log(formData);
     };
     const handleSubmit = async (event) => {
         event.preventDefault();
-    
         let url = 'http://localhost:3000/';
         let response
+       const storedFormData = JSON.parse(localStorage.getItem('formData'));
+    formData['username']=storedFormData.username
+    formData['password']=storedFormData.password
+    formData['email']=storedFormData.email
+        console.log(formData)
         if (formData.joinAs === 'company') { // Access joinAs from formData
-            
-
-             response = await axios.post(url + 'company/addCompany', getUserData()); // Pass formData as the request payload
-        
+             response = await axios.post(url + 'company/addCompany', {data:formData}); // Pass formData as the request payload
           } else if(formData.joinAs === 'team') {
-        
-             response = await axios.post(url + 'team/newTeam', getUserData()); // Pass formData as the request payload
-         
+             response = await axios.post(url + 'team/newTeam', {data:formData}); // Pass formData as the request payload
           }
         onSubmit(response.data);
-        console.log(formData);
       };
-      
     const handleJoinAsChange = (event) => {
         const joinAs = event.target.value;
         setFormData((prevFormData) => ({
@@ -47,9 +44,7 @@ const PlanForm = ({ onSubmit }  ) => {
         }));
         setJoin(joinAs);
     };
-
     const { joinAs, teamName, teamDescription, companyName, companyURL, companyDescription,companyAddress,level } = formData;
-
     return (
         <form onSubmit={handleSubmit}>
         <div className="bg-white shadow-md rounded px-8 py-6 max-w-md mx-auto">
@@ -64,7 +59,7 @@ const PlanForm = ({ onSubmit }  ) => {
                         checked={joinAs === 'team'}
                         onChange={handleJoinAsChange}
                         className="form-radio"
-                    />
+                    />  
                     <span className="ml-2">Team</span>
                 </label>
                 <label className="inline-flex items-center ml-6">
@@ -114,6 +109,7 @@ const PlanForm = ({ onSubmit }  ) => {
     <select
       className="border border-gray-300 rounded p-2 focus:outline-none focus:ring focus:border-blue-500"
       onChange={handleInputChange}
+      name='level'
       value={level}
     >
       <option value="">Select your Level</option>
@@ -123,9 +119,10 @@ const PlanForm = ({ onSubmit }  ) => {
       <option value="3">AM</option>
       <option value="3">M</option>
     </select>
-                </div>
+</div>
             )}
             {joinAs === 'company' && (
+                
                 <div className="mb-4">
                     <label className="block text-gray-700 font-bold mb-2" htmlFor="CompanyDetails">
                         Company Name
@@ -163,7 +160,6 @@ const PlanForm = ({ onSubmit }  ) => {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         placeholder="Enter company Address"
                     />
-
                     <label className="block text-gray-700 font-bold mb-2 w-full my-2" htmlFor="CompanyDetails">
                         Company Description
                     </label>
@@ -176,16 +172,11 @@ const PlanForm = ({ onSubmit }  ) => {
                             name ='companyDescription'
                         />
                     </div>
-                    
-            
-
             )}
             <div className='text-center w-full '>
-
                <input className='bg-blue-600 text-white p-3 w-40 ' type="submit" value="Done" />
             </div>
         </div>
-     
         </form>
     );
 };

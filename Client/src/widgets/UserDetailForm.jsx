@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { setUserData } from '../global';
+
 
 
 
@@ -17,14 +17,12 @@ const UserDetailForm = ({ onSubmit }) => {
       [name]: value
     }));
   };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-    onSubmit(()=>setUserData(formData))
-   console.log(formData);
+    localStorage.setItem('formData', JSON.stringify(formData));
+    onSubmit(formData);
+    console.log(formData);
   };
-  
-
   return (
     <form onSubmit={handleSubmit}>
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-md mx-auto my-2">
