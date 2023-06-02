@@ -12,9 +12,15 @@ const Login = () => {
    const fetchData = async () => {
     console.log('hi')
       try {
-        const response = await axios.post('http://localhost:3000/auth/'+type,{username:"name",password:"abc"});
-      
-        console.log(response)
+
+
+        let username1 = document.getElementById("username").value
+        let password1 = document.getElementById("password").value
+
+        console.log(username1, password1)
+        const response = await axios.post('http://localhost:3000/auth/'+type,{username:username1,password:password1});
+        
+        // console.log(response)
       } catch (error) {
         console.log(error);
       }
@@ -30,12 +36,12 @@ const Login = () => {
             <div className='m-auto relative md:top-[100px]'>
             <div style={{ border: "1px solid black" }} className='border-solid  rounded-xl shadow-lg text-center'>
               <h1 className='text-center my-5 font-bold text-[1.8rem]'>Login Form</h1>
-              <TextField style={{ width: "80%", margin: "10px 0px" }} id="username" label="Username" variant="standard" />
-              <TextField style={{ width: "80%", margin: "10px 0px" }} id="password" label="Password" variant="standard" type='password' />
+              <TextField style={{ width: "80%", margin: "10px 0px" }}  name="username" id="username" label="Username" variant="standard" />
+              <TextField style={{ width: "80%", margin: "10px 0px" }}  name="username" id="password" label="Password" variant="standard" type='password' />
               <div className='flex items-center justify-center my-2'>
-                <input onChange={() => setType('teamAuth')} className='m-2' type="radio"  name ='userType'  value='team'/>
+                <input onChange={() => setType('team')} className='m-2' type="radio"  name ='userType'  value='team'/>
                 <label htmlFor="">Team</label>
-                <input onChange={() => setType('companyAuth')} className='m-2' type="radio" name = 'userType' value='company' />
+                <input onChange={() => setType('company')} className='m-2' type="radio" name = 'userType' value='company' />
                 <label htmlFor="">Company</label>
               </div>
               <button onClick={fetchData} style={{ width: "80%", margin: "10px 0px" }} >
