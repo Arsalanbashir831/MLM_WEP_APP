@@ -2,7 +2,7 @@ const express = require("express")
 const mongoose = require("mongoose")
 const userSchema = require('../model/User')
 const router = express.Router()
-
+const teamModel = require('../model/Team')
 
 function check4cc(mail) {
     const person = userSchema.findOne({email: mail})
@@ -41,19 +41,24 @@ router.post("/add_user",async (req,res)=>{
     console.log(req.body)
     const {name,password,email,team,rank} = req.body;
     const result = new userSchema({
-        // name: name,
-        // email : email,
-        // password : password,
-        // team: team,
-        // rank : rank,
+        name: name,
+        email : email,
+        password : password,
+        team: team,
+        rank : rank,
 
-        // personal_cc : 0,
-        // pc_cc : 0,
-        // non_material_cc: 0
+        personal_cc : 0,
+        pc_cc : 0,
+        non_material_cc: 0
 
-        name,email,password,team,rank
     })
 
+    const prev_team = await teamModel.findOne({id : team}).exec()
+    
+    prev_team.member.push(team)
+    console.log(prev_team.member)
+
+    prev_team.save()
     const saved = await result.save();
     console.log(result)
     res.status(200).json(result)

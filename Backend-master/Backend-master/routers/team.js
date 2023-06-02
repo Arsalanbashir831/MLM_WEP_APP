@@ -2,13 +2,15 @@ const express = require("express")
 const mongoose = require("mongoose")
 const teamModel = require('../model/Team')
 const teamSchema = teamModel.schema
+
+const  companyModel = require('../model/Company')
 const router = express.Router()
 let id = 1
 
 let conn = mongoose.connection;
 
 router.post("/newTeam", async (req, res) => {
-    const { username, password } = req.body
+    const { username, password, CompName } = req.body
 
     id = id + 1;
     // Find the last added record
