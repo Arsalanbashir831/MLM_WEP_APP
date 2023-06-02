@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { setUserData } from '../global';
+
+
 
 const UserDetailForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
-    name: '',
+    username: '',
     email: '',
     password: ''
   });
@@ -15,11 +18,12 @@ const UserDetailForm = ({ onSubmit }) => {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    onSubmit(formData);
-    console.log(formData); // Replace with your logic
+    onSubmit(()=>setUserData(formData))
+   console.log(formData);
   };
+  
 
   return (
     <form onSubmit={handleSubmit}>
@@ -33,10 +37,10 @@ const UserDetailForm = ({ onSubmit }) => {
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="name"
-              name="name"
+              name="username"
               type="text"
               placeholder="Enter your name"
-              value={formData.name}
+              value={formData.username}
               onChange={handleInputChange}
             />
           </div>

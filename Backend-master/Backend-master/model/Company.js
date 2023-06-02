@@ -6,10 +6,11 @@ const Tutorial = require('./Tutorial');
 
 const companySchema = new mongoose.Schema({
     CompName: String,
-    CompPass: String,
+    password: String,
     products: [Product.schema],
     tutorial: [Tutorial],
-    team : [Number]
+    team : [Number],
+    username:String
 });
 
 module.exports = mongoose.model("company", companySchema);

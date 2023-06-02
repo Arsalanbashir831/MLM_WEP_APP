@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { setJoin } from '../global';
-
+import { setJoin,getUserData } from '../global';
+import axios from 'axios'
 const PlanForm = ({ onSubmit }  ) => {
     const [formData, setFormData] = useState({
         joinAs: '',
@@ -20,11 +20,25 @@ const PlanForm = ({ onSubmit }  ) => {
             [name]: value,
         }));
     };
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        onSubmit(formData);
-        console.log(formData); // Replace with your logic
+    
+        let url = 'http://localhost:3000/';
+        let response
+        if (formData.joinAs === 'company') { // Access joinAs from formData
+            
+
+             response = await axios.post(url + 'company/addCompany', getUserData()); // Pass formData as the request payload
+        
+          } else if(formData.joinAs === 'team') {
+        
+             response = await axios.post(url + 'team/newTeam', getUserData()); // Pass formData as the request payload
+         
+          }
+        onSubmit(response.data);
+        console.log(formData);
       };
+      
     const handleJoinAsChange = (event) => {
         const joinAs = event.target.value;
         setFormData((prevFormData) => ({
@@ -119,6 +133,7 @@ const PlanForm = ({ onSubmit }  ) => {
                     <input
                         type="text"
                         id="companyName"
+                        name='companyName'
                         value={companyName}
                         onChange={handleInputChange}
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -130,6 +145,7 @@ const PlanForm = ({ onSubmit }  ) => {
                     <input
                         type="text"
                         id="companyurl"
+                        name ='companyURL'
                         onChange={handleInputChange}
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         value={companyURL}
@@ -141,6 +157,7 @@ const PlanForm = ({ onSubmit }  ) => {
                     <input
                         type="text"
                         id="companyAddress"
+                        name ='companyAddress'
                         onChange={handleInputChange}
                         value={companyAddress}
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -156,6 +173,7 @@ const PlanForm = ({ onSubmit }  ) => {
                             className="border border-gray-300 rounded p-2 resize-none focus:outline-none focus:ring focus:border-blue-500"
                             rows={6} cols={45}
                             placeholder="Enter your text"
+                            name ='companyDescription'
                         />
                     </div>
                     

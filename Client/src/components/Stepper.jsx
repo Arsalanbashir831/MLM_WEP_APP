@@ -15,8 +15,6 @@ const steps = ['Get Started', 'Joining', 'Select Plan'];
 export default function Steppers() {
   const [activeStep, setActiveStep] = React.useState(0);    
   const [completed, setCompleted] = React.useState({});
-  
-
  const totalSteps = () => {
     return steps.length;
   };
@@ -118,11 +116,12 @@ export default function Steppers() {
                     Step {activeStep + 1} already completed
                   </Typography>
                 ) : (
-                  <Button onClick={handleComplete}>
-                    {completedSteps() === totalSteps() - 1
-                      ? 'Finish'
-                      : 'Complete Step'}
-                  </Button>
+                  <></>
+                  // <Button onClick={handleComplete}>
+                  //   {completedSteps() === totalSteps() - 1
+                  //     ? 'Finish'
+                  //     : 'Complete Step'}
+                  // </Button>
                 ))}
             </Box>
           </React.Fragment>

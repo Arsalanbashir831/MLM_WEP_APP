@@ -4,7 +4,7 @@ const companyModel = require('../model/Company')
 const router = express.Router()
 
 router.post('/addCompany',async(req,res)=>{
-    const {CompName,CompPass} = req.body
+    const {CompName,password,username} = req.body
     const result = new companyModel({
         CompName,CompPass
     })
