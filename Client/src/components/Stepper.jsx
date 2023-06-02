@@ -98,9 +98,7 @@ export default function Steppers() {
             <Typography sx={{ mt: 2, mb: 1, py: 1 }}>
                 {activeStep===0?<UserDetailForm onSubmit={handleFormSubmit}></UserDetailForm>:""}
                 {activeStep===1?<PlanForm onSubmit={handleFormSubmit}></PlanForm>:""}
-               {activeStep===2? <SelectPlan onSubmit={handleFormSubmit} ></SelectPlan>:""}
-              
-                
+               {activeStep===2? <SelectPlan onSubmit={handleFormSubmit} ></SelectPlan>:""} 
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
               <Button

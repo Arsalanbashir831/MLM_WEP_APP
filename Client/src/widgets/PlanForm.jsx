@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { setJoin } from '../global';
 
-const PlanForm = (  ) => {
+const PlanForm = ({ onSubmit }  ) => {
     const [formData, setFormData] = useState({
         joinAs: '',
         teamName: '',
         teamDescription: '',
+        level:'',
         companyName: '',
         companyURL: '',
         companyDescription: '',
@@ -19,7 +20,11 @@ const PlanForm = (  ) => {
             [name]: value,
         }));
     };
-
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        onSubmit(formData);
+        console.log(formData); // Replace with your logic
+      };
     const handleJoinAsChange = (event) => {
         const joinAs = event.target.value;
         setFormData((prevFormData) => ({
@@ -29,9 +34,10 @@ const PlanForm = (  ) => {
         setJoin(joinAs);
     };
 
-    const { joinAs, teamName, teamDescription, companyName, companyURL, companyDescription,companyAddress } = formData;
+    const { joinAs, teamName, teamDescription, companyName, companyURL, companyDescription,companyAddress,level } = formData;
 
     return (
+        <form onSubmit={handleSubmit}>
         <div className="bg-white shadow-md rounded px-8 py-6 max-w-md mx-auto">
             <h2 className="text-center text-2xl font-bold mb-6">Join Form</h2>
             <div className="mb-4">
@@ -73,6 +79,7 @@ const PlanForm = (  ) => {
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         placeholder="Enter team Name"
                     />
+
                     <div className="flex items-center justify-start flex-col my-2">
                         <label className="block text-gray-700 font-bold mb-2 w-full" htmlFor="teamDescription">
                             Team Description
@@ -83,9 +90,25 @@ const PlanForm = (  ) => {
                             rows={6} cols={45}
                             value={teamDescription}
                             onChange={handleInputChange}
+                            
                             placeholder="Enter team description"
                         />
                     </div>
+                    <label className="block text-gray-700 font-bold mb-2" htmlFor="teamMembers">
+      Level
+    </label>
+    <select
+      className="border border-gray-300 rounded p-2 focus:outline-none focus:ring focus:border-blue-500"
+      onChange={handleInputChange}
+      value={level}
+    >
+      <option value="">Select your Level</option>
+      <option value="1">PC</option>
+      <option value="2">AS</option>
+      <option value="3">S</option>
+      <option value="3">AM</option>
+      <option value="3">M</option>
+    </select>
                 </div>
             )}
             {joinAs === 'company' && (
@@ -137,9 +160,15 @@ const PlanForm = (  ) => {
                     </div>
                     
             
-            )}
 
+            )}
+            <div className='text-center w-full '>
+
+               <input className='bg-blue-600 text-white p-3 w-40 ' type="submit" value="Done" />
+            </div>
         </div>
+     
+        </form>
     );
 };
 
