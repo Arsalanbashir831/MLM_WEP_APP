@@ -21,6 +21,13 @@ router.post('/addProduct', async (req, res) => {
   }
 });
 
+router.post("/getProducts", async(req,res)=>{
+  const {id} = req.body
+  data = Company.findById({ id: id })
+  console.log(data)
+  res.send(data)
+})
+
 // Read all products for a company
 router.get('/companies/:companyId/products', async (req, res) => {
   try {

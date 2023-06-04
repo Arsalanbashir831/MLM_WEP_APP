@@ -18,7 +18,7 @@ app.use("/users",userRouter)
 
 app.get("/",(req,res)=>{
     console.log("Index")
-    res.render('index',{text : "Huzaifa"})
+    res.render('index',{text : "Hello"})
 })
 
 const teamRouter = require('./routers/team')

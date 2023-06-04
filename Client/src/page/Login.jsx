@@ -5,8 +5,8 @@ import Button from '@mui/material/Button';
 import googleIcon from "../assets/google.png";
 import IconButton from '@mui/material/IconButton';
 import axios from 'axios'
-
-const Login = () => {
+import { Navigate } from 'react-router-dom';
+const Login = (props) => {
   const [type, setType] = useState('');
   
    const fetchData = async () => {
@@ -20,7 +20,18 @@ const Login = () => {
         console.log(username1, password1)
         const response = await axios.post('http://localhost:3000/auth/'+type,{username:username1,password:password1});
         
-        // console.log(response)
+        let data = response.data
+        if (data['url'] == '/login' ){
+          window.location.replace(data['type']);
+        }
+        else{
+          console.log(response)
+          console.log(response.data)
+          localStorage.setItem("id" , data['id'])
+          localStorage.setItem("type" , data['type'])
+          window.location.replace(data['type']);
+        }
+        
       } catch (error) {
         console.log(error);
       }
