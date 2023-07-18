@@ -1,32 +1,23 @@
 import React, { useState } from 'react';
 import login from "../assets/loginMan.png";
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import googleIcon from "../assets/google.png";
-import IconButton from '@mui/material/IconButton';
 import axios from 'axios'
 
 const Login = () => {
   const [type, setType] = useState('');
-  
+
    const fetchData = async () => {
-    console.log('hi')
       try {
-
-
         let username1 = document.getElementById("username").value
         let password1 = document.getElementById("password").value
-
         console.log(username1, password1)
         const response = await axios.post('http://localhost:3000/auth/'+type,{username:username1,password:password1});
-        
-        // console.log(response)
+        console.log(response.status)
       } catch (error) {
         console.log(error);
       }
     };
-
-  return (
+  return (  
     <>
     {console.log(type)}
       <div className='grid grid-cols-1 m-10 gap-[100px] md:grid-cols-2 lg:grid-cols-2 lg:m-0'>
@@ -47,16 +38,7 @@ const Login = () => {
               <button onClick={fetchData} style={{ width: "80%", margin: "10px 0px" }} >
                 Login
               </button>
-                {/* <Button style={{ width: "80%", margin: "10px 0px" }} variant="contained" color="primary">
-                  Login
-                </Button> */}
               <div className='text-center'>
-                {/* <Button onClick={fetchData}  style={{ width: "80%", margin: "10px 0px", background: "white", color: "black" }} variant="contained" color="primary"> */}
-                  {/* <IconButton>
-                    <img src={googleIcon} alt="Google Icon" width={30} height={20} />
-                  </IconButton>
-                  Google Sign In
-                </Button> */}
               </div>
             </div>
           </div>
