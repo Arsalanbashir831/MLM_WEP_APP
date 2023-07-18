@@ -1,8 +1,4 @@
 import React, { useState } from 'react';
-
-
-
-
 const UserDetailForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     username: '',

@@ -9,6 +9,7 @@ import Select from '@mui/material/Select';
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
 
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -32,12 +33,13 @@ const SelectPlan = ({ onSubmit }) => {
   });
   const [availableDates, setAvailableDates] = useState([]);
   const [companyName, setCompanyName] = useState([]);
+  const [selected,setSelected]= useState('');
 
   useEffect(() => {
     const fetchCompanyNames = async () => {
       try {
         const response = await axios.get('http://localhost:3000/company/getAllCompany');
-        const companyNames = response.data.map((name) => name.CompName);
+        const companyNames = response.data.map((name) => name.companyName);
   
         // Add static company name to the array
         const staticCompanyName = 'Not Mention';
@@ -52,11 +54,12 @@ const SelectPlan = ({ onSubmit }) => {
     fetchCompanyNames();
   }, []);
   const handleInputChange = (event) => {
-    const { id, value } = event.target;
+    const { id, value  } = event.target;
     setCompanyDetails((prevDetails) => ({
       ...prevDetails,
       [id]: value,
     }));
+    setSelected(value)
   };
 
   const handleCalendarChange = (date) => {
@@ -78,7 +81,7 @@ const SelectPlan = ({ onSubmit }) => {
     onSubmit(()=>{
         axios.post("http://localhost:3000/team/newTeam",{data:companyDetails})
     });
-    
+
     console.log(companyDetails); // Replace with your logic
   };
   return (
@@ -94,7 +97,7 @@ const SelectPlan = ({ onSubmit }) => {
           <FormControl sx={{ m: 1, width: 300, mt: 3 }}>
             <Select
               displayEmpty
-              value={companyDetails.name}
+              value={selected}
               onChange={(event) => handleInputChange(event)}
               input={<OutlinedInput />}
               renderValue={(selected) => {
