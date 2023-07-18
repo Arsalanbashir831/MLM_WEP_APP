@@ -19,15 +19,15 @@ const PlanForm = ({ onSubmit }  ) => {
             [name]: value,
         }));
         console.log(formData);
-    };
+    };  
     const handleSubmit = async (event) => {
         event.preventDefault();
         let url = 'http://localhost:3000/';
         let response
        const storedFormData = JSON.parse(localStorage.getItem('formData'));
-    formData['username']=storedFormData.username
-    formData['password']=storedFormData.password
-    formData['email']=storedFormData.email
+        formData['username']=storedFormData.username
+        formData['password']=storedFormData.password
+        formData['email']=storedFormData.email
         console.log(formData)
         if (formData.joinAs === 'company') { // Access joinAs from formData
              response = await axios.post(url + 'company/addCompany', {data:formData}); // Pass formData as the request payload

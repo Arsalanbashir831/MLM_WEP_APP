@@ -18,6 +18,7 @@ router.post('/addCompany',async(req,res)=>{
 router.get('/getAllCompany', async (req, res) => {
     try {
       const companies = await companyModel.find();
+      console.log(companies);
       res.status(200).json(companies);
     } catch (error) {
       res.status(500).json({ error: 'An error occurred while fetching companies' });
