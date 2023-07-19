@@ -13,7 +13,7 @@ router.post('/team',async(req,res)=>{
         return res.status(404).json({"url" : "/login"})
     }
     if (result != null || result != {}){
-        return res.status(200).json({url : "/team/"+ username})
+        return res.status(200).json({url : "/team/"+ result._id, id: result._id, type: "user"})
     }
     
 })
@@ -27,7 +27,7 @@ router.post('/company',async(req,res)=>{
     }
     console.log(result)
     if (result != null || result != {}){
-        return res.status(200).json({url : "/company/"+ username})
+        return res.status(200).json({url : "/company/"+ username, id: result._id, type: "company"})
     }
 })
 

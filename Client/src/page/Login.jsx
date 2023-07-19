@@ -1,24 +1,34 @@
 import React, { useState } from 'react';
 import login from "../assets/loginMan.png";
 import TextField from '@mui/material/TextField';
-import axios from 'axios';
-
-const Login = () => {
+import axios from 'axios'
+import { Navigate } from 'react-router-dom';
+const Login = (props) => {
   const [type, setType] = useState('');
 
-  const fetchData = async () => {
-    try {
-      let username1 = document.getElementById("username").value;
-      let password1 = document.getElementById("password").value;
-      const response = await axios.post('http://localhost:3000/auth/' + type, { username: username1, password: password1 });
-      if (response.status === 200 && type === 'team') {
-        window.location.href = `/user/${username1}`;
-      }else if(response.status === 200 && type === 'company'){
-        window.location.href = `/company/${username1}`; // Redirect to '/user' path
+   const fetchData = async () => {
+      try {
+        let username1 = document.getElementById("username").value
+        let password1 = document.getElementById("password").value
+        console.log(username1, password1)
+        const response = await axios.post('http://localhost:3000/auth/'+type,{username:username1,password:password1});
+        
+        let data = response.data
+        if (data['url'] == '/login' ){
+          window.location.replace(data['type']);
+        }
+        else{
+          console.log(response)
+          console.log(response.data)
+          localStorage.setItem("id" , data['id'])
+          localStorage.setItem("type" , data['type'])
+          window.location.replace(data['type']);
+        }
+        
+      } catch (error) {
+        console.log(error);
+
       }
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   return (
