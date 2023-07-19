@@ -12,7 +12,6 @@ const Login = (props) => {
         let password1 = document.getElementById("password").value
         console.log(username1, password1)
         const response = await axios.post('http://localhost:3000/auth/'+type,{username:username1,password:password1});
-        
         let data = response.data
         if (data['url'] == '/login' ){
           window.location.replace(data['type']);
