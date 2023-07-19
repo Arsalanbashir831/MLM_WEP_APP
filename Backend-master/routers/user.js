@@ -33,9 +33,9 @@ const ranks = {
 
 const cc1 = 243;
 
-router.get("/",(req,res)=>{
-    res.sendStatus(200).send({name:"random"})
-})
+// router.get("/",(req,res)=>{
+//     res.sendStatus(200).send({name:"random"})
+// })
 
 router.post("/add_user",async (req,res)=>{
     console.log(req.body)

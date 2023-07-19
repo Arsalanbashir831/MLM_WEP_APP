@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AdminNav from '../components/AdminNav';
 import ProductCard from '../components/ProductCard';
 import Cart from '../components/Cart';
@@ -6,7 +6,7 @@ import Box from '../widgets/Box';
 import UserHome from '../components/UserHome';
 import JoinRef from '../components/JoinRef';
 import Training from '../components/Training';
-
+import axios from 'axios';
 
 const navigation = [
   { id: '1', name: 'Home' },
@@ -17,11 +17,13 @@ const navigation = [
 ];
 
 const UserAdmin = () => {
+
   const [navigate, setNavigator] = useState('1');
 
   const navigationHandler = (index) => {
     setNavigator(index);
   };
+
 
   return (
     <div>
