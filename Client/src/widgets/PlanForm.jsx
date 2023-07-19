@@ -31,8 +31,10 @@ const PlanForm = ({ onSubmit }  ) => {
         console.log(formData)
         if (formData.joinAs === 'company') { // Access joinAs from formData
              response = await axios.post(url + 'company/addCompany', {data:formData}); // Pass formData as the request payload
+             window.location.href = '/company';
           } else if(formData.joinAs === 'team') {
              response = await axios.post(url + 'team/newTeam', {data:formData}); // Pass formData as the request payload
+             window.location.href = '/user';
           }
         onSubmit(response.data);
       };
