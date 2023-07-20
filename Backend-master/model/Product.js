@@ -4,5 +4,6 @@ const productSchema = new mongoose.Schema({
     cc: Number,
     p_img: String,
     category: String,
+    
 });
 module.exports =  mongoose.model("product",productSchema) ;

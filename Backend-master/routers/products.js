@@ -1,11 +1,30 @@
 const express = require('express');
 const router = express.Router();
 const Company = require('../model/Company');
-const product = require('../model/Product')
+const product = require('../model/Product');
+const user = require('../model/User')
+const team = require('../model/Team');
 // Create a product for a company
+const cc_value = 20;
+const percentage = {
+  "PC" : 5,
+  "Supervisor" : 30,
+  "AM" : 38,
+  "Manager" : 45
+
+}
+
+const ranks = {
+  2 : "PC",
+  25 : "Supervisor",
+  75 : "AM",
+  120 : "Manager"
+}
+
+
 router.post('/addProduct', async (req, res) => {
   try {
-    const { prodName, cc, p_img, category, CompName } = req.body;
+    const { prodName, cc, p_img, category, CompName, user_id } = req.body;
     const newProduct = new product({
       prodName: prodName,
       cc : cc,
@@ -92,6 +111,28 @@ router.delete('/companies/:companyId/products/:productId', async (req, res) => {
   }
 });
 
+router.post('/buy', async(req,res)=>{
+  const {user_id, product_id} = req.body;
+  const prod_obj = await product.findOne({_id : product_id})
+  const user_obj = await user.findOne({_id : user_id});
+  const cc = prod_obj.cc;
+  user_obj.personal_cc += cc;
+  const price = cc * cc_value;
+  if (user_obj.personal_cc >= 1){
+    if (user_obj.p_cc + user_obj.personal_cc + user_obj.non_material_cc > 4){
+      if (user_obj.rank in percentage){
+        price = price * (percentage[user_obj.rank]/100);
+      }
+    }
+  }
+  
+  const team_id = user_obj.team
+  const team_obj = await team.findOne({id : id});
+
+  
+  
+  
+})
 const addProduct = async(companyName, product)=>{
   const data = await Company.findOne({CompName: companyName}).exec()
   console.log(data)

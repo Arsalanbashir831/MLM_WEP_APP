@@ -7,9 +7,9 @@ const Tutorial = require('./Tutorial');
 const companySchema = new mongoose.Schema({
     companyName: String,
     password: String,
-    products: [Product.schema],
-    tutorial: [Tutorial],
-    team : [Number],
+    products: [String],
+    tutorial: [String],
+    team : [String],
     username:String
 });
 
