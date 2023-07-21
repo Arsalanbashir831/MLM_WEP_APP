@@ -117,9 +117,9 @@ router.post('/buy', async(req,res)=>{
   const user_obj = await user.findOne({_id : user_id});
   const cc = prod_obj.cc;
   user_obj.personal_cc += cc;
-  const price = cc * cc_value;
+  let price = cc * cc_value;
   if (user_obj.personal_cc >= 1){
-    if (user_obj.p_cc + user_obj.personal_cc + user_obj.non_material_cc > 4){
+    if (user_obj.pc_cc + user_obj.personal_cc + user_obj.non_material_cc > 4){
       if (user_obj.rank in percentage){
         price = price * (percentage[user_obj.rank]/100);
       }
@@ -127,14 +127,36 @@ router.post('/buy', async(req,res)=>{
   }
   
   const team_id = user_obj.team
-  const team_obj = await team.findOne({id : id});
+  const team_obj = await team.findOne({id : team_id});
 
-  
+  const total_cc  = user_obj.personal_cc + user_obj.non_material_cc + user_obj.pc_cc 
+  if (total_cc >= 120){
+    user_obj.rank = 'Manager'
+  }
+  else if (total_cc >= 75){
+    user_obj.rank = 'AM';
+  }
+  else if (total_cc >= 25){
+    user_obj.rank = 'Supervisor'
+  }
+  else if (total_cc >= 5){
+    user_obj.rank = 'PC';
+  }
+
+  const newUser = user(user_obj)
+  newUser.save()
+  res.status(200).json({"user_cc" : newUser})
+
+  // for (let index = 0; index < team_obj.member.length; index++) {
+  //   const element = team_obj.member[index];
+  //   const member = user.findOne({_id : element})
+
+  // }
   
   
 })
 const addProduct = async(companyName, product)=>{
-  const data = await Company.findOne({CompName: companyName}).exec()
+  const data = await Company.findOne({companyName: companyName}).exec()
   console.log(data)
   data.products.push(product)
 
