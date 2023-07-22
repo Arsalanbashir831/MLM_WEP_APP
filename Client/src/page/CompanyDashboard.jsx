@@ -71,7 +71,7 @@ const CompanyDashboard = () => {
             products={companyData.products? companyData.products.length : 0} 
             mostSoldProducts={companyData.products? companyData.products : [] }  />}
             {navigate === '2' && <Products productData={companyData.products} />}
-            {navigate === '3' && <Team />}
+            {navigate === '3' && <Team  teamData={companyData.team} />}
             {navigate === '4' && (
               <>
               <div className='text-right'>

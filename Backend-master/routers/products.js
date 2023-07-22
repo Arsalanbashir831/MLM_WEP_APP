@@ -25,7 +25,7 @@ const ranks = {
 
 router.post('/addProduct', async (req, res) => {
   try {
-    const { prodName, cc, p_img, category, company_id, user_id } = req.body;
+    const { prodName, cc, p_img, category, company_id } = req.body;
     const newProduct = new product({
       prodName: prodName,
       cc : cc,

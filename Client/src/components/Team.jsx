@@ -1,28 +1,29 @@
 import { Delete, Edit } from '@mui/icons-material';
+import axios from 'axios';
 import React, { useState } from 'react';
 
-const Team = () => {
+const Team = ({ teamData }) => {
     const [teamMembers, setTeamMembers] = useState([
-        { id: 1, name: 'John Doe', address: '123 Main St', level: 'PC' },
-        { id: 2, name: 'Jane Smith', address: '456 Elm St', level: 'AS' },
+        teamData
     ]);
 
-    const [newMember, setNewMember] = useState({ id: '' });
+    const [newMember, setNewMember] = useState( '' );
     const [isModalOpen, setIsModalOpen] = useState(false);
-
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        setNewMember((prevState) => ({ ...prevState, [name]: value }));
+        console.log(value);
+        setNewMember(value[1]);
     };
 
-    const handleAddMember = () => {
+    const handleAddMember = async () => {
         setTeamMembers((prevState) => [...prevState, newMember]);
-        setNewMember({ id: ''});
-        setIsModalOpen(false);
-    };
+    await axios.post('http://localhost:3000/team/newTeam',{
+    data:{username:newMember.username,
+    company_id:localStorage.getItem('id')}
 
-    const handleDeleteMember = (index) => {
-        setTeamMembers((prevState) => prevState.filter((_, i) => i !== index));
+})
+ 
+        setIsModalOpen(false);
     };
 
     const openModal = () => {
@@ -50,34 +51,23 @@ const Team = () => {
                     <tr className="bg-gray-200">
                         <th className="px-4 py-2">ID</th>
                         <th className="px-4 py-2">Name</th>
-                        <th className="px-4 py-2">Address</th>
-                        <th className="px-4 py-2">Levels</th>
-                        <th className="px-4 py-2">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {teamMembers.map((member, index) => (
-                        <tr key={index} className="border-t">
-                            <td className="border px-4 py-2">{member.id}</td>
-                            <td className="border px-4 py-2">{member.name}</td>
-                            <td className="border px-4 py-2">{member.address}</td>
-                            <td className="border px-4 py-2">{member.level}</td>
-                            <td className="border px-4 py-2">
-                                <button
-                                    className="bg-yellow-300 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded mr-2"
-                                    onClick={() => handleEditMember(index)}
-                                >
-                                    <Edit></Edit>
-                                </button>
-                                <button
-                                    className="bg-red-300 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-                                    onClick={() => handleDeleteMember(index)}
-                                >
-                                    <Delete></Delete>
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
+                    {console.log(teamMembers)}
+                    {
+                        teamMembers[0].map((member,index) => {
+                            return (<>
+                                <tr key={index} className="border-t">
+                                    
+                                    <td className="border px-4 py-2">{member._id}</td>
+                                    <td className="border px-4 py-2">{member.username}</td>
+                                </tr>
+                            </>)
+                        })
+
+
+                    }
                 </tbody>
             </table>
 
@@ -99,7 +89,7 @@ const Team = () => {
                                     onChange={handleInputChange}
                                     required
                                 />
-                           </div>
+                            </div>
                             <div className="flex justify-end">
                                 <button
                                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

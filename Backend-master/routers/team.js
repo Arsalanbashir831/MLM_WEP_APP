@@ -7,7 +7,7 @@ const router = express.Router()
 let id = 1
 let conn = mongoose.connection;
 router.post("/newTeam", async (req, res) => {
-    const { username, password, company_id } = req.body.data
+    const { username, company_id } = req.body.data
     console.log(req.body)
     id = id + 1;
     // Find the last added record
@@ -25,7 +25,6 @@ router.post("/newTeam", async (req, res) => {
     const newTeam = new teamModel({
         id : id,
         username: username,
-        password : password,
         company: company_id
     })
 
