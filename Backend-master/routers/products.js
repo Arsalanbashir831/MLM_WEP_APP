@@ -25,7 +25,7 @@ const ranks = {
 
 router.post('/addProduct', async (req, res) => {
   try {
-    const { prodName, cc, p_img, category, CompName, user_id } = req.body;
+    const { prodName, cc, p_img, category, company_id, user_id } = req.body;
     const newProduct = new product({
       prodName: prodName,
       cc : cc,
@@ -33,7 +33,7 @@ router.post('/addProduct', async (req, res) => {
       category : category
     });
     newProduct.save()
-    addProduct(CompName, newProduct)
+    addProduct(company_id, newProduct)
     res.json(newProduct)
   } catch (error) {
     res.status(500).json({ error: error });
@@ -97,6 +97,33 @@ router.put('/companies/:companyId/products/:productId', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
+
+router.post('/update', async(req,res)=>{
+  const {product_id, cc, category, name} = req.body;
+  const prod =  await product.findById(product_id).exec();
+  
+  if (cc)
+    prod.cc = cc;
+  if (category)
+    prod.category = category;
+  if (name)
+    prod.prodName = name;
+
+  const updatedProduct = new product(prod)
+   const saved = await updatedProduct.save();
+  
+  
+  res.status(200).json({"Updated" : saved});
+})
+
+router.post('/delete', async(req,res)=>{
+  const {product_id} = req.body;
+  const de = await product.findByIdAndDelete(product_id);
+  if (de){
+    res.status(200).json({"Delete" : "Successful"});
+  }
+  
+})
 
 // Delete a product for a company
 router.delete('/companies/:companyId/products/:productId', async (req, res) => {
@@ -163,8 +190,8 @@ router.post('/buy', async(req,res)=>{
   
   
 })
-const addProduct = async(companyName, product)=>{
-  const data = await Company.findOne({companyName: companyName}).exec()
+const addProduct = async(company_id, product)=>{
+  const data = await Company.findOne({_id: company_id}).exec()
   console.log(data)
   data.products.push(product)
 
