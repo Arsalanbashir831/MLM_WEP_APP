@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
 const Company = require('../model/Company');
 const product = require('../model/Product');
@@ -42,8 +43,14 @@ router.post('/addProduct', async (req, res) => {
 
 router.post("/getProducts", async(req,res)=>{
   const {id} = req.body
-  data = Company.findById({ id: id })
-  console.log(data)
+  // console.log(id)
+  data = await Company.findOne({ _id: id}).exec()
+  console.log(data.products)
+  if (data){
+    return res.status(200).json(data.products)
+    
+  }
+  return res.status(500);
 })
 
 // Read all products for a company

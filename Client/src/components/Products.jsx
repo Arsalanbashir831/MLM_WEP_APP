@@ -1,16 +1,32 @@
 import { Delete, Edit } from '@mui/icons-material';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const productData = [
-    { name: 'Product1', price: '100$', category: 'Category1',points:"10" },
-    { name: 'Product2', price: '200$', category: 'Category2',points:"20" }
-];
 
-const Products = () => {
+// const getApiData = async () => {
+//     const response = await fetch(
+//       "https://localhost:3000/",{method : "POST", body : localStorage.getItem('id')}
+      
+//     ).then((response) => console.log(response));
+  
+//     // update the state
+//     setProductData(response);
+//   };
+ 
+axios.post("http://localhost:3000/product/getProducts", {'id': localStorage.getItem('id')}).then((response)=>{
+        // console.log(response);
+        console.log("Hello")
+    })
+const Products = async () => {
+
+    const [productData, setProductData] = useState([])
+  
+    
     const [products, setProducts] = useState([...productData]);
     const [newProduct, setNewProduct] = useState({ name: '', price: '', category: '' });
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+    
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setNewProduct((prevState) => ({ ...prevState, [name]: value }));
