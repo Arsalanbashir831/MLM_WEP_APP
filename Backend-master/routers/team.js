@@ -19,7 +19,7 @@ router.post("/newTeam", async (req, res) => {
         id = lastAddedTeam.id + 1;
     }
     
-    console.log(obj)
+    
     const newTeam = new teamModel({
         id : id,
         username: username,
