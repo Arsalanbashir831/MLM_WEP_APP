@@ -8,7 +8,7 @@ const companySchema = new mongoose.Schema({
     companyName: String,
     password: String,
     products: [Product.schema],
-    tutorial: [String],
+    tutorial: [Tutorial.schema],
     team : [Team.schema],
     username:String
 });
