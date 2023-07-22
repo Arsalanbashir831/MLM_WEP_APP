@@ -71,7 +71,6 @@ const CompanyDashboard = () => {
             {navigate === '4' && (
               <>
               <div className='text-right'>
-               
                 <button
                   className="bg-blue-300 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2" 
                 >
