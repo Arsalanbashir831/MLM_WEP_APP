@@ -1,8 +1,25 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
-const Company = require('../models/company');
-
+const Company = require('../model/Company');
+const Tutorial = require('../model/Tutorial')
 // Create a tutorial for a company
+router.post('/add', async(req,res)=>{
+  const {thumbnail, link, company_id } = req.body;
+  
+  const company = await Company.findOne({_id : company_id})
+
+  const newTutorial = new Tutorial({
+    thumbnail : thumbnail,
+    link : link
+  })
+  company.tutorial.push(newTutorial);
+  company.save();
+  newTutorial.save();
+
+  res.status(200).json({"thumbnail" : newTutorial._id})
+
+})
 router.post('/companies/:companyId/tutorials', async (req, res) => {
   try {
     const { companyId } = req.params;
