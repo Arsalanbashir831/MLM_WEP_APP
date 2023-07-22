@@ -4,4 +4,4 @@ const tutorialSchema  =new mongoose.Schema({
     link: String,
 });
 
-module.exports =  tutorialSchema;
+module.exports =  mongoose.model("tutorial",tutorialSchema);
