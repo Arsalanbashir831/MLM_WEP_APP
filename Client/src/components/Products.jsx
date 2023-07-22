@@ -20,9 +20,7 @@ const Products = ({productData}) => {
         setIsDialogOpen(false);
     };
 
-    const handleDeleteProduct = (index) => {
-        setProducts((prevState) => prevState.filter((_, i) => i !== index));
-    };
+    
 
     const openDialog = () => {
         setIsDialogOpen(true);
@@ -50,7 +48,6 @@ const Products = ({productData}) => {
                         <th className="px-4 py-2">Name</th>
                         <th className="px-4 py-2">Category</th>
                         <th className="px-4 py-2">CC</th>
-                        <th className="px-4 py-2">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,20 +56,7 @@ const Products = ({productData}) => {
                             <td className="border px-4 py-2">{product.prodName}</td>
                             <td className="border px-4 py-2">{product.category}</td>
                             <td className="border px-4 py-2">{product.cc}</td>
-                            <td className="border px-4 py-2">
-                                <button
-                                    className="bg-yellow-300 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded mr-2"
-                                    onClick={() => handleEditProduct(index)}
-                                >
-                                    <Edit></Edit>
-                                </button>
-                                <button
-                                    className="bg-red-300 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-                                    onClick={() => handleDeleteProduct(index)}
-                                >
-                                    <Delete></Delete>
-                                </button>
-                            </td>
+                           
                         </tr>
                     ))}
                 </tbody>
