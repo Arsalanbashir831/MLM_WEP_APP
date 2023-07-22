@@ -20,7 +20,7 @@ router.post('/team',async(req,res)=>{
 
 router.post('/company',async(req,res)=>{
     const {username, password} = req.body;
-    const result = await companyRouter.findOne({CompName: username, CompPass: password})
+    const result = await companyRouter.findOne({companyName: username, password: password})
 
     if (result == null){
         return res.status(404).json({"url" : "/login"})

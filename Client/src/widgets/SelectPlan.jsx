@@ -8,7 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
-
+import { Link } from 'react-router-dom';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -22,7 +22,6 @@ const MenuProps = {
 };
 
 const SelectPlan = ({ onSubmit }) => {
-  const theme = useTheme();
 
   const [companyDetails, setCompanyDetails] = useState({
     name: '',
@@ -33,33 +32,41 @@ const SelectPlan = ({ onSubmit }) => {
   });
   const [availableDates, setAvailableDates] = useState([]);
   const [companyName, setCompanyName] = useState([]);
-  const [selected,setSelected]= useState('');
+  const [selected, setSelected] = useState('');
+  const [showAdditionalFields, setShowAdditionalFields] = useState(false);
 
   useEffect(() => {
     const fetchCompanyNames = async () => {
       try {
         const response = await axios.get('http://localhost:3000/company/getAllCompany');
         const companyNames = response.data.map((name) => name.companyName);
-  
         // Add static company name to the array
         const staticCompanyName = 'Not Mention';
         const modifiedCompanyNames = [staticCompanyName, ...companyNames];
-  
         setCompanyName(modifiedCompanyNames);
       } catch (error) {
         console.error('Error fetching company names:', error);
       }
     };
-  
     fetchCompanyNames();
+
   }, []);
+
   const handleInputChange = (event) => {
-    const { id, value  } = event.target;
+    const { value } = event.target;
+    if ( value === 'Not Mention') {
+      setShowAdditionalFields(true); // Show additional fields when "Not Mention" is selected
+    } else {
+      setShowAdditionalFields(false); // Hide additional fields for other company names
+    }
+    setSelected(value);
+  };
+  const formHandling = (event) => {
+    const { id, value } = event.target;
     setCompanyDetails((prevDetails) => ({
       ...prevDetails,
       [id]: value,
     }));
-    setSelected(value)
   };
 
   const handleCalendarChange = (date) => {
@@ -76,24 +83,33 @@ const SelectPlan = ({ onSubmit }) => {
       meetingDate: date,
     }));
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit(()=>{
-        axios.post("http://localhost:3000/team/newTeam",{data:companyDetails})
+    onSubmit(() => {
+      axios.post("http://localhost:3000/team/newTeam", { data: companyDetails });
+      console.log(companyDetails);
     });
-
-    console.log(companyDetails); // Replace with your logic
+  
   };
+
   return (
     <div className="bg-white shadow-md rounded px-8 py-6 max-w-md mx-auto">
       {getJoin() === 'company' && (
         <>
-          <h1>No Plans For Company Click For Next</h1>
+          <div className='text-center'>
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="submit"
+            >
+              <Link to='/login'>Click to Go Login Page</Link>
+            </button>
+          </div>
         </>
       )}
       {getJoin() === 'team' && (
-        <form onSubmit={handleSubmit}>
-          {/* Render the input fields and calendar for team */}
+      <>
+        
           <FormControl sx={{ m: 1, width: 300, mt: 3 }}>
             <Select
               displayEmpty
@@ -118,12 +134,11 @@ const SelectPlan = ({ onSubmit }) => {
                   value={name}
                 >
                   {name}
-                  
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
-          {companyDetails.name === 'Not Mention' && (
+          {showAdditionalFields && (
             <>
               <label className="block text-gray-700 font-bold mb-2 my-2" htmlFor="companyName">
                 Company Name
@@ -133,7 +148,7 @@ const SelectPlan = ({ onSubmit }) => {
                 id="name"
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 value={companyDetails.name}
-                onChange={handleInputChange}
+                onChange={formHandling}
                 placeholder="Enter company Name"
               />
               <label className="block text-gray-700 font-bold mb-2 my-2" htmlFor="companyUrl">
@@ -144,7 +159,7 @@ const SelectPlan = ({ onSubmit }) => {
                 id="url"
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 value={companyDetails.url}
-                onChange={handleInputChange}
+                onChange={formHandling}
                 placeholder="Enter company URL"
               />
 
@@ -156,7 +171,7 @@ const SelectPlan = ({ onSubmit }) => {
                 id="address"
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 value={companyDetails.address}
-                onChange={handleInputChange}
+                onChange={formHandling}
                 placeholder="Enter company Address"
               />
 
@@ -169,7 +184,7 @@ const SelectPlan = ({ onSubmit }) => {
                 rows={6}
                 cols={45}
                 value={companyDetails.description}
-                onChange={handleInputChange}
+                onChange={formHandling}
                 placeholder="Enter your text"
               />
 
@@ -186,13 +201,15 @@ const SelectPlan = ({ onSubmit }) => {
               />
             </>
           )}
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
-          >
-            Done
-          </button>
-        </form>
+          <div className='text-center'>
+            <button onClick={handleSubmit}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="submit"
+            >
+              <Link to='/login'>Submit</Link>
+            </button>
+          </div>
+       </>
       )}
     </div>
   );

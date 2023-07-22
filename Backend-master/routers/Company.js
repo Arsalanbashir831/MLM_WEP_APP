@@ -25,6 +25,22 @@ router.get('/getAllCompany', async (req, res) => {
     }
   });
   
+  router.get('/:companyId', async (req, res) => {
+    const companyId = req.params.companyId;
+    
+    try {
+      const company = await companyModel.findById(companyId);
+      
+      if (!company) {
+        return res.status(404).json({ error: 'Company not found' });
+      }
+      
+      res.status(200).json(company);
+    } catch (error) {
+      res.status(500).json({ error: 'An error occurred while fetching the company' });
+    }
+  });
+  
 
 
 

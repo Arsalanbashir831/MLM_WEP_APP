@@ -22,20 +22,12 @@ const PlanForm = ({ onSubmit }  ) => {
     };  
     const handleSubmit = async (event) => {
         event.preventDefault();
-        let url = 'http://localhost:3000/';
         let response
        const storedFormData = JSON.parse(localStorage.getItem('formData'));
         formData['username']=storedFormData.username
         formData['password']=storedFormData.password
         formData['email']=storedFormData.email
         console.log(formData)
-        if (formData.joinAs === 'company') { // Access joinAs from formData
-             response = await axios.post(url + 'company/addCompany', {data:formData}); // Pass formData as the request payload
-             window.location.href = '/company';
-          } else if(formData.joinAs === 'team') {
-             response = await axios.post(url + 'team/newTeam', {data:formData}); // Pass formData as the request payload
-             window.location.href = '/user';
-          }
         onSubmit(response.data);
       };
     const handleJoinAsChange = (event) => {
@@ -176,7 +168,7 @@ const PlanForm = ({ onSubmit }  ) => {
                     </div>
             )}
             <div className='text-center w-full '>
-               <input className='bg-blue-600 text-white p-3 w-40 ' type="submit" value="Done" />
+               <input onClick={onSubmit} className='bg-blue-600 text-white p-3 w-40 ' type="submit" value="Done" />
             </div>
         </div>
         </form>
