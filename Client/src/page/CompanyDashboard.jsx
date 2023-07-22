@@ -26,7 +26,7 @@ const CompanyDashboard = () => {
     const fetchCompanyData = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/company/${companyId}`);
-        // console.log(response.data.products);
+        console.log(response.data);
         setCompanyData(response.data);
      
       } catch (error) {
@@ -65,8 +65,12 @@ const CompanyDashboard = () => {
             </div>
           </div>
           <div className="md:col-span-5">
-            {navigate === '1' && <Home team={companyData.team? companyData.team.length : 0} tutorials={companyData.tutorials? companyData.tutorials.length : 0 } products={2} mostSoldProducts={companyData.products? companyData.products : [] }  />}
-            {navigate === '2' && <Products/>}
+            {navigate === '1' && <Home 
+            team={companyData.team? companyData.team.length : 0} 
+            tutorials={companyData.tutorial? companyData.tutorial.length : 0 } 
+            products={companyData.products? companyData.products.length : 0} 
+            mostSoldProducts={companyData.products? companyData.products : [] }  />}
+            {navigate === '2' && <Products productData={companyData.products} />}
             {navigate === '3' && <Team />}
             {navigate === '4' && (
               <>

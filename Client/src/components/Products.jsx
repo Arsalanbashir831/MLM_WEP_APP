@@ -1,40 +1,22 @@
 import { Delete, Edit } from '@mui/icons-material';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 
+// const productData = [
+//     { prodName: 'Product1',category: 'Category1',cc:"10" },
+//     { prodName: 'Product2',category: 'Category2',cc:"20" }
+// ];
 
-// const getApiData = async () => {
-//     const response = await fetch(
-//       "https://localhost:3000/",{method : "POST", body : localStorage.getItem('id')}
-      
-//     ).then((response) => console.log(response));
-  
-//     // update the state
-//     setProductData(response);
-//   };
-
-let productsData = []
-axios.post("http://localhost:3000/product/getProducts", {'id': localStorage.getItem('id')}).then((response)=>{
-        console.log(response.data);
-        productsData = response.data;
-    })
-const Products = async () => {
-
- 
-    
+const Products = ({productData}) => {
     const [products, setProducts] = useState([...productData]);
-    const [newProduct, setNewProduct] = useState({ name: '', price: '', category: '' });
+    const [newProduct, setNewProduct] = useState({ prodName: '', cc: '', category: '' });
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-    
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setNewProduct((prevState) => ({ ...prevState, [name]: value }));
-    };
-
+      };
     const handleAddProduct = () => {
         setProducts((prevState) => [...prevState, newProduct]);
-        setNewProduct({ name: '', price: '', category: '' });
+        setNewProduct({ prodName: '', cc: '', category: '' });
         setIsDialogOpen(false);
     };
 
@@ -66,19 +48,17 @@ const Products = async () => {
                 <thead>
                     <tr className="bg-gray-200">
                         <th className="px-4 py-2">Name</th>
-                        <th className="px-4 py-2">Price</th>
                         <th className="px-4 py-2">Category</th>
-                        <th className="px-4 py-2">Points</th>
+                        <th className="px-4 py-2">CC</th>
                         <th className="px-4 py-2">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {products.map((product, index) => (
                         <tr key={index} className="border-t">
-                            <td className="border px-4 py-2">{product.name}</td>
-                            <td className="border px-4 py-2">{product.price}</td>
+                            <td className="border px-4 py-2">{product.prodName}</td>
                             <td className="border px-4 py-2">{product.category}</td>
-                            <td className="border px-4 py-2">{product.points}</td>
+                            <td className="border px-4 py-2">{product.cc}</td>
                             <td className="border px-4 py-2">
                                 <button
                                     className="bg-yellow-300 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded mr-2"
@@ -111,22 +91,22 @@ const Products = async () => {
                                     className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                                     type="text"
                                     id="name"
-                                    name="name"
-                                    value={newProduct.name}
+                                    name="prodName"
+                                    value={newProduct.prodName}
                                     onChange={handleInputChange}
                                     required
                                 />
                             </div>
                             <div className="mb-4">
                                 <label className="block text-gray-700 font-bold mb-2" htmlFor="price">
-                                    Price
+                                   CC
                                 </label>
                                 <input
                                     className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                                     type="text"
                                     id="price"
-                                    name="price"
-                                    value={newProduct.price}
+                                    name="cc"
+                                    value={newProduct.cc}
                                     onChange={handleInputChange}
                                     required
                                 />
