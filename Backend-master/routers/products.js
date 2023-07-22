@@ -45,8 +45,9 @@ router.post("/getProducts", async(req,res)=>{
   const {id} = req.body
   // console.log(id)
   data = await Company.findOne({ _id: id}).exec()
-  console.log(data.products)
+  console.log(data)
   if (data){
+
     return res.status(200).json(data.products)
     
   }

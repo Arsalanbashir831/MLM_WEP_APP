@@ -12,15 +12,15 @@ import axios from 'axios';
 //     // update the state
 //     setProductData(response);
 //   };
- 
+
+let productsData = []
 axios.post("http://localhost:3000/product/getProducts", {'id': localStorage.getItem('id')}).then((response)=>{
-        // console.log(response);
-        console.log("Hello")
+        console.log(response.data);
+        productsData = response.data;
     })
 const Products = async () => {
 
-    const [productData, setProductData] = useState([])
-  
+ 
     
     const [products, setProducts] = useState([...productData]);
     const [newProduct, setNewProduct] = useState({ name: '', price: '', category: '' });
