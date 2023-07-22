@@ -34,6 +34,8 @@ app.use('/auth',auth)
 const productRouter = require('./routers/products')
 app.use("/product",productRouter)
 
+const tutorialRouter = require('./routers/tutorials');
+app.use("/tutorial",tutorialRouter)
 
 mongoose.connection.once('open', ()=>{
     console.log("Connected to MongoDB");

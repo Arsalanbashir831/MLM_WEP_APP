@@ -19,7 +19,9 @@ router.post("/newTeam", async (req, res) => {
         id = lastAddedTeam.id + 1;
     }
     
-    console.log(obj)
+    const comp = await companyModel.findOne({_id : company_id});
+    
+    
     const newTeam = new teamModel({
         id : id,
         username: username,
@@ -27,6 +29,8 @@ router.post("/newTeam", async (req, res) => {
         company: company_id
     })
 
+    comp.team.push(newTeam);
+    comp.save();
     console.log(typeof newTeam.company);
     newTeam.save()
 
