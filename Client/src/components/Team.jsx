@@ -12,7 +12,7 @@ const Team = ({ teamData }) => {
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         console.log(value);
-        setNewMember(value[1]);
+        setNewMember(value);
     };
 
     const handleAddMember = async () => {
