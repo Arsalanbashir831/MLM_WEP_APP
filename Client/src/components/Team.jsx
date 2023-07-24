@@ -11,11 +11,13 @@ const Team = ({ teamData }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const handleInputChange = (event) => {
         const { name, value } = event.target;
+        setNewMember(value)
         console.log(value);
     };
 
     const handleAddMember = async () => {
         // setTeamMembers((prevState) => [...prevState, newMember]);
+      
 
     await axios.post('http://localhost:3000/team/newTeam',{data:{username:newMember, company_id : localStorage.getItem('id')}
 

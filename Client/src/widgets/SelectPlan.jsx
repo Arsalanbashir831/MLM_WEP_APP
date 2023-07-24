@@ -92,13 +92,21 @@ const SelectPlan = ({ onSubmit }) => {
     });
   
   };
+  const handleSubmitCompany = (event) => {
+    event.preventDefault();
+    onSubmit(() => {
+      axios.post("http://localhost:3000/team/addCompany", { data: companyDetails });
+      console.log(companyDetails);
+    });
+  
+  };
 
   return (
     <div className="bg-white shadow-md rounded px-8 py-6 max-w-md mx-auto">
       {getJoin() === 'company' && (
         <>
           <div className='text-center'>
-            <button
+            <button onClick={handleSubmitCompany}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
