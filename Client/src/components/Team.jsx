@@ -12,14 +12,12 @@ const Team = ({ teamData }) => {
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         console.log(value);
-        setNewMember(value);
     };
 
     const handleAddMember = async () => {
-        setTeamMembers((prevState) => [...prevState, newMember]);
-    await axios.post('http://localhost:3000/team/newTeam',{
-    data:{username:newMember.username,
-    company_id:localStorage.getItem('id')}
+        // setTeamMembers((prevState) => [...prevState, newMember]);
+
+    await axios.post('http://localhost:3000/team/newTeam',{data:{username:newMember, company_id : localStorage.getItem('id')}
 
 })
  
@@ -54,7 +52,7 @@ const Team = ({ teamData }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {console.log(teamMembers)}
+                    
                     {
                         teamMembers[0].map((member,index) => {
                             return (<>
