@@ -12,9 +12,6 @@ const Team = ({ teamData }) => {
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         console.log(value);
-        
-            setNewMember(value)
-        
     };
 
     const handleAddMember = async () => {
